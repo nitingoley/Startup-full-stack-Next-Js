@@ -1,4 +1,4 @@
-import { auth, signOut, signIn } from "@/auth";
+import { auth, signOut, signIn } from "../auth";
 import Link from "next/link";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
