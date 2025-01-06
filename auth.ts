@@ -4,11 +4,11 @@ import { client } from "./sanity/lib/client";
 import { AUTHOR_BY_GITHUB_ID_QUERY } from "./sanity/lib/queries";
 import { writeClient } from "./sanity/lib/write-client";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export default NextAuth({
   providers: [
     GitHubProvider({
-      clientId: process.env.AUTH_GITHUB_ID,
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      clientId: process.env.AUTH_GITHUB_ID || "",
+      clientSecret: process.env.AUTH_GITHUB_SECRET || "",
     }),
   ],
   callbacks: {
@@ -19,9 +19,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       try {
         const existingUser = await client
           .withConfig({ useCdn: false })
-          .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
-            id: githubId,
-          });
+          .fetch(AUTHOR_BY_GITHUB_ID_QUERY, { id: githubId });
 
         if (!existingUser) {
           await writeClient.create({
